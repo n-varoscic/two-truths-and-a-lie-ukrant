@@ -317,7 +317,7 @@
   .end-screen.show { display: block; }
 
   .end-banner {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 3rem;
     margin-bottom: 8px;
   }
