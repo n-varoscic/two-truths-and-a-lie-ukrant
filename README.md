@@ -1,12 +1,12 @@
-# Two Truths and a Lie — UKrant Edition
+# Two Truths and a Lie - UKrant Edition
 
-An interactive browser-based quiz game built around real headlines from [UKrant](https://ukrant.nl/?lang=en), the independent newspaper of the University of Groningen. Players are shown three headlines — two real, one fabricated — and must identify the lie.
+An interactive browser-based quiz game built around real headlines from [UKrant](https://ukrant.nl/?lang=en), the independent newspaper of the University of Groningen. Players are shown three headlines - two real, one fabricated - and must identify the lie.
 
 ---
 
 ## 📄 Project description
 
-This project scrapes article headlines from UKrant across two categories: **news** and **background**. The scraped headlines are saved to a JSON file. A second JSON file contains fabricated headlines generated to match the style and tone of each category. The game loads both files and presents players with three headlines per round — two real, one fake — across 10 rounds.
+This project scrapes article headlines from UKrant across two categories: **news** and **background**. The scraped headlines are saved to a JSON file. A second JSON file contains fabricated headlines generated to match the style and tone of each category. The game loads both files and presents players with three headlines per round - two real, one fake - across 10 rounds.
 
 ---
 
@@ -18,7 +18,7 @@ To run the web scraping code, make sure you have Python 3.8 or higher installed.
 pip install -r requirements.txt
 ```
 
-> No additional dependencies are needed to run the game itself — it runs in the browser using plain HTML, CSS, and JavaScript.
+> Chrome must be installed on your machine — the scraper uses ChromeDriver via `webdriver-manager`, which downloads the correct driver automatically.
 
 ---
 
@@ -45,13 +45,12 @@ TWO-TRUTHS-AND-A-LIE-UKRANT/
 ### Modules
 
 #### Web Scraping (`web_scraping/scrape.py`)
-Purpose: Scrapes headlines from the UKrant website.
+Purpose: Scrapes headlines from the UKrant website using Selenium and BeautifulSoup.
 
-- `scrape_news_headlines()`: Scrapes headlines from the news category.
-  - Output: List of dictionaries with `title`, `url`, `category: "news"`
-
-- `scrape_background_headlines()`: Scrapes headlines from the background/magazine category.
-  - Output: List of dictionaries with `title`, `url`, `category: "background"`
+- `scrape_ukrant_category(url, category)`: Scrapes all headlines from a given UKrant category page.
+  - Input: `url` (the category page URL), `category` (string label, either `"news"` or `"background"`)
+  - Output: List of dictionaries with `title`, `url`, and `category`
+  - Automatically clicks "Load More" until all articles on the page are loaded before scraping
 
 #### Game Logic (`static/game.js`)
 Purpose: Loads headline data and runs the quiz game in the browser.
@@ -72,7 +71,7 @@ Purpose: Loads headline data and runs the quiz game in the browser.
 | File | Description |
 |------|-------------|
 | `data/ukrant_headlines.json` | Real headlines scraped from ukrant.nl |
-| `data/ukrant_fake_headlines.json` | ~970 fabricated headlines, manually curated |
+| `data/ukrant_fake_headlines.json` | ~970 fabricated headlines, created using claude.ai |
 
 Both files share the same structure:
 
@@ -92,7 +91,7 @@ Both files share the same structure:
 
 ## 🚀 How to run the game
 
-The game loads data via `fetch()`, so it must be served through a local server — it will **not** work if you open the HTML file directly by double-clicking it.
+The game loads data via `fetch()`, so it must be served through a local server.
 
 1. Open a terminal in the project root folder
 2. Run:
@@ -125,5 +124,5 @@ If you want to refresh the real headlines with the latest articles from UKrant:
 - Each round shows three headlines — two real, one fake
 - Click the headline you think is the lie
 - The game reveals which headlines were true and which one was fake
-- Play continues for 10 rounds, after which you receive a final score and rating
+- The game continues for 10 rounds, after which you receive a final score and a rating
 - Use **Next Round** to continue and **Start Over** to reset at any time
