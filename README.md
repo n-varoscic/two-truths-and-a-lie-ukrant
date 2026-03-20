@@ -18,7 +18,7 @@ To run the web scraping code, make sure you have Python 3.8 or higher installed.
 pip install -r requirements.txt
 ```
 
-> Chrome must be installed on your machine — the scraper uses ChromeDriver via `webdriver-manager`, which downloads the correct driver automatically.
+> Chrome must be installed on your machine - the scraper uses ChromeDriver via `webdriver-manager`, which downloads the correct driver automatically.
 
 ---
 
