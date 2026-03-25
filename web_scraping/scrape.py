@@ -32,7 +32,6 @@ def scrape_ukrant_category(url, category):
             )
             driver.execute_script("arguments[0].scrollIntoView();", load_more)
             load_more.click()
-            print(f"Clicked Load More... ({category})")
             time.sleep(2)
         except:
             print(f"No more pages. ({category})")
