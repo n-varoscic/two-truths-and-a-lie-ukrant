@@ -201,6 +201,28 @@ function resetGame() {
   loadRound();
 }
 
+function shareScore() {
+  let rating = '';
+  for (const [lo, hi, label] of RATINGS) {
+    if (score >= lo && score <= hi) { rating = label; break; }
+  }
+
+  const shareText = `I scored ${score}/${TOTAL_ROUNDS} on UKrant's Two Truths & One Lie Quiz — "${rating}". Can you do better?`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: 'UKrant Quiz',
+      text: shareText,
+    }).catch(err => console.log('Share cancelled:', err));
+  } else {
+    navigator.clipboard.writeText(shareText).then(() => {
+      alert('Score copied to clipboard!');
+    }).catch(err => {
+      alert('Could not copy to clipboard');
+    });
+  }
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────────
 document.getElementById('total-rounds').textContent = TOTAL_ROUNDS;
 document.getElementById('todays-date').textContent = new Date().toLocaleDateString('en-GB', {
